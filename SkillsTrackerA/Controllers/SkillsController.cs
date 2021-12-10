@@ -30,11 +30,13 @@ namespace SkillsTrackerA.Controllers
                                 "<option>master coder</option>" +
                                 "<option>making apps</option>";
 
-            string form =   "<form method='post' action='table'>" +
+            string form =   "<form method='post'>" +
                                 "<label>Date:   <input type='date' name='date'/></label></br>" +
                                 "<label>Scala:  <select name='Scala'/>" + options + "</select></label></br>" +
                                 "<label>Ruby:   <select name='Ruby'/>" + options + "</select></label></br>" +
                                 "<label>Basic:  <select name='Basic'/>" + options + "</select></label></br>" +
+                                "<label> Display as List: <input type='radio' name='format' value='List' checked> List</br>" +
+                                "<label> Display as Table: <input type='radio' name='format' value='Table'> Table</br>" +
                                 "<input type='submit' value='Submit'/>" +
                             "<form>";
 
@@ -44,16 +46,44 @@ namespace SkillsTrackerA.Controllers
 
         [HttpPost]
         [Route("form")]
-        public IActionResult DisplayFormResults(DateTime date, string scala, string ruby, string basic)
+        public IActionResult DisplayFormResults(string format, DateTime date, string scala, string ruby, string basic)
         {
-            string form = "<h1>" + date.ToString("yyyy-MM-dd") + "</h1>" +
+            if(format == "List")
+            {
+                string form = "<h1>" + date.ToString("yyyy-MM-dd") + "</h1>" +
                             "<ol>" +
                                 "<li>Scala: " + scala + "</li>" +
                                 "<li>Ruby: " + ruby + "</li>" +
                                 "<li>Basic: " + basic + "</li>" +
                             "</ol>";
 
-            return Content(form, "text/html");
+                return Content(form, "text/html");
+            }
+            else
+            {
+                string table = "<h1>" + date.ToString("yyyy-MM-dd") + "</h1>" +
+               "<table>" +
+                   "<thead>" +
+                       "<tr>" +
+                           "<th>Scala</th>" +
+                           "<th></th>" +
+                           "<th>Ruby</th>" +
+                           "<th></th>" +
+                           "<th>Basic</th>" +
+                       "</tr>" +
+                   "</thead>" +
+                   "<thead>" +
+                       "<tr>" +
+                           "<td>" + scala + "</td>" +
+                           "<td></td>" +
+                           "<td>" + ruby + "</td>" +
+                           "<td></td>" +
+                           "<td>" + basic + "</td>" +
+                       "</tr>" +
+                   "</tbody>" +
+               "</table>";
+                return Content(table, "text/html");
+            }    
         }
 
 
