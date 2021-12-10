@@ -30,7 +30,7 @@ namespace SkillsTrackerA.Controllers
                                 "<option>master coder</option>" +
                                 "<option>making apps</option>";
 
-            string form =   "<form method='post'>" +
+            string form =   "<form method='post' action='table'>" +
                                 "<label>Date:   <input type='date' name='date'/></label></br>" +
                                 "<label>Scala:  <select name='Scala'/>" + options + "</select></label></br>" +
                                 "<label>Ruby:   <select name='Ruby'/>" + options + "</select></label></br>" +
@@ -59,9 +59,29 @@ namespace SkillsTrackerA.Controllers
 
         [HttpPost]
         [Route("table")]
-        public IActionResult displayTableResults()
+        public IActionResult DisplayTableResults(DateTime date, string scala, string ruby, string basic)
         {
-            string table = "";
+            string table = "<h1>" + date.ToString("yyyy-MM-dd") + "</h1>" +
+                "<table>" +
+                    "<thead>" +
+                        "<tr>" +
+                            "<th>Scala</th>" +
+                            "<th></th>" +
+                            "<th>Ruby</th>" +
+                            "<th></th>" +
+                            "<th>Basic</th>" +
+                        "</tr>" +
+                    "</thead>" +
+                    "<thead>" +
+                        "<tr>" +
+                            "<td>" + scala + "</td>" +
+                            "<td></td>" +
+                            "<td>" + ruby + "</td>" +
+                            "<td></td>" +
+                            "<td>" + basic + "</td>" +
+                        "</tr>" +
+                    "</tbody>" +
+                "</table>";
             return Content(table, "text/html");
         }
     }
